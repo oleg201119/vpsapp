@@ -1,0 +1,46 @@
+<ion-view class="signup-view">
+  <div class="bar bar-header bar-light">
+    <h1 class="title">Register Passwords and Pins (3 of 4)</h1>
+  </div>
+  <ion-content scroll="false" class="has-header">
+    <div class="top-content row">
+      <div class="col col-top">
+        <form name="signupForm" novalidate xng-submit="signup_step_3()">
+          <div class="list">
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password" ng-model="auth.password" required>
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Confirm Password</span>
+              <input type="password" ng-model="auth.password2" required>
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Normal PIN</span>
+              <input type="text" ng-model="auth.normalPin" required>
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Confirm Normal PIN</span>
+              <input type="text" ng-model="auth.normalPin2" required>
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Blocking PIN</span>
+              <input type="text" ng-model="auth.blockPin" required>
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Confirm Blocking PIN</span>
+              <input type="text" ng-model="auth.blockPin2" required>
+            </label>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="bottom-content row">
+      <div class="col col-bottom">
+        <button class="button button-calm align-left" ng-click="$ionicGoBack()">Back</button>
+        <button class="button button-calm align-right" ng-click="signup_step_3()" ng-disabled="signupForm.$invalid">Next</button>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

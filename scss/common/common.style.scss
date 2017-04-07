@@ -1,0 +1,31 @@
+.align-left {
+  float: left;
+}
+
+.align-right {
+  float: right;
+}
+
+.hiddenTab {
+  display: none !important;
+}
+
+.bar-header {
+  div.icon-right {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    bottom: 5px;
+
+    padding-right: 2px;
+    padding-left: 2px;
+
+    font-size: 32px;
+    line-height: 32px;
+    font-weight: 300;
+
+    &.stable {
+      color: #b2b2b2;
+    }
+  }
+}

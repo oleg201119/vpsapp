@@ -1,0 +1,29 @@
+<ion-view class="service-view">
+  <div class="bar bar-header bar-stable">
+    <button class="button button-clear button-stable icon ion-ios-arrow-back" ng-click="goBack()"></button>
+    <h1 class="title">{{car.registration}}</h1>
+    <div class="icon-right stable">
+      <i class="icon ion-connection-bars"></i>
+    </div>
+  </div>
+
+  <ion-content scroll="true" class="has-header has-tabs">
+    <div class="list">
+      <div class="item item-divider">
+        Services
+      </div>
+      <div class="item item-icon-right" ng-repeat="service in services">
+        {{service.type}} {{service.date}}
+        <i class="icon ion-ios-cart-outline" ng-click="bookService()"></i>
+      </div>
+
+      <div class="item item-divider">
+        Diagnostics
+      </div>
+      <div class="item" ng-repeat="diagnostic in diagnostics">
+        <h2>{{diagnostic.code}}</h2>
+        <p>{{diagnostic.description}}</p>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

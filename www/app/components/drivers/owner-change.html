@@ -1,0 +1,33 @@
+<ion-modal-view class="owner-change-view">
+  <ion-header-bar>
+    <h1 class="title">Change Owner</h1>
+    <div class="buttons">
+      <button class="button button-clear button-icon button-stable ion-ios-close-empty" ng-click="closeOwner()"></button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <form name="ownerChangeForm" novalidate>
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">New Owner ID</span>
+          <input type="text" ng-model="owner.id" required>
+        </label>
+        <label class="item item-input">
+          <span class="input-label">New Owner Verification Key</span>
+          <input type="text" ng-model="owner.key" required>
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Your Password</span>
+          <input type="password" ng-model="owner.password" required>
+        </label>
+      </div>
+    </form>
+
+    <div class="row">
+      <div class="col col-top">
+        <button class="button button-calm align-left" ng-click="closeOwner()">Cancel</button>
+        <button class="button button-calm align-right" ng-click="transfer()" ng-disabled="ownerChangeForm.$invalid">Transfer</button>
+      </div>
+    </div>
+  </ion-content>
+</ion-modal-view>

@@ -1,0 +1,34 @@
+{
+  "name": "vpsapp",
+  "app_id": "9ddf7b11",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*",
+    "!www/**/*.map"
+  ],
+  "v2": false,
+  "typescript": false,
+  "watch": {
+    "sass": [
+      "scss/**/*.scss"
+    ],
+    "html": [
+      "www/**/*.html"
+    ],
+    "livereload": [
+      "www/**/*.html",
+      "www/**/*.js",
+      "www/**/*.css"
+    ]
+  },  
+  "proxies": [
+  	{
+  		"path": "/devrest/mobile/",
+  		"proxyUrl": "http://vps.oliveinnovations.com/devrest/mobile/"
+  	}
+  ]
+}

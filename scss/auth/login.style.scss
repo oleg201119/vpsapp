@@ -1,0 +1,33 @@
+.login-view {
+
+  ion-content
+    {
+      top: 0px !important;
+    }
+
+  .top-content {
+    height: 35%;
+
+    .app-copy {
+			text-align: center;
+			padding-top: 10vh;
+		}
+
+    .app-logo {
+			font-size: 50px;
+			font-family: cursive;
+			font-weight: 600;
+			font-style: italic;
+			color: $login-logo-color;
+		}
+
+		img.app-logo {
+			width: 150px;
+		}
+  }
+
+  .bottom-content {
+    height: 65%;
+    margin: 0px;
+  }
+}

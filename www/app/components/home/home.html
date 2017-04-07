@@ -1,0 +1,34 @@
+<ion-view class="home-view" view-title="VPS">
+  <ion-nav-buttons side="right">
+    <button class="button button-clear" ng-click="notifications()">
+      <i class="icon ion-android-notifications"></i>
+    </button>
+    <button class="button button-clear" ng-click="refresh()">
+      <i class="icon ion-refresh"></i>
+    </button>
+  </ion-nav-buttons>
+
+  <ion-content scroll="true" class="has-header">
+    <div class="list">
+      <div class="item item-divider">
+        {{alias}}
+      </div>
+
+      <a class="item item-thumbnail-left" ng-click="carSelect(car.id)" ng-repeat="car in cars | filter: { isMine: true }">
+        <img ng-src="{{car.image}}">
+        <h2>{{car.registration}}</h2>
+        <p></p>
+      </a>
+
+      <div class="item item-divider">
+        Other Vehicles
+      </div>
+
+      <a class="item item-thumbnail-left" ng-click="carSelect(car.id)" ng-repeat="car in cars | filter:  { isMine: false }">
+        <img ng-src="{{car.image}}">
+        <h2>{{car.registration}}</h2>
+        <p></p>
+      </a>
+    </div>
+  </ion-content>
+</ion-view>

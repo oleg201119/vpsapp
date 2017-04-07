@@ -1,0 +1,60 @@
+<ion-view class="signup-view">
+  <div class="bar bar-header bar-light">
+    <h1 class="title">Register Sequrity Questions (2 of 4)</h1>
+  </div>
+  <ion-content scroll="false" class="has-header">
+    <div class="top-content row">
+      <div class="col col-top">
+        <form name="signupForm" novalidate xng-submit="signup_step_2()">
+          <div class="list">
+            <label class="item item-input item-select">
+                <div class="input-label">
+                  Random question 1
+                </div>
+                <select ng-model="auth.securityQuestion1" ng-options="question.query for question in questions">
+                  <option value="" ng-if="!auth.securityQuestion1">Random question 1</option>
+                </select>
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Question 1 answer</span>
+              <input type="text" ng-model="auth.securityAnswer1" required>
+            </label>
+
+            <label class="item item-input item-select">
+                <div class="input-label">
+                  Random question 2
+                </div>
+                <select ng-model="auth.securityQuestion2" ng-options="question.query for question in questions">
+                  <option value="" ng-if="!auth.securityQuestion2">Random question 2</option>
+                </select>
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Question 2 answer</span>
+              <input type="text" ng-model="auth.securityAnswer2" required>
+            </label>
+
+            <label class="item item-input item-select">
+                <div class="input-label">
+                  Random question 3
+                </div>
+                <select ng-model="auth.securityQuestion3" ng-options="question.query for question in questions">
+                  <option value="" ng-if="!auth.securityQuestion3">Random question 3</option>
+                </select>
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Question 3 answer</span>
+              <input type="text" ng-model="auth.securityAnswer3" required>
+            </label>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="bottom-content row">
+      <div class="col col-bottom">
+        <button class="button button-calm align-left" ng-click="$ionicGoBack()">Back</button>
+        <button class="button button-calm align-right" ng-click="signup_step_2()" ng-disabled="signupForm.$invalid || isInvalidSelection()">Next</button>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

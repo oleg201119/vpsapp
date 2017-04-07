@@ -1,0 +1,29 @@
+<ion-view class="login-view" cache-view="false">
+  <ion-content scroll="false">
+    <div class="top-content row">
+      <div class="app-copy col col-center">
+        <img class="app-logo" src="img/logo.png">
+      </div>
+    </div>
+    <div class="bottom-content row">
+      <div class="col col-top">
+        <form name="loginForm" novalidate>
+          <div class="list">
+            <label class="item item-input">
+              <span class="input-label">Email</span>
+              <input type="email" ng-model="auth.email" required>
+            </label>
+            <label class="item item-input">
+              <span class="input-label">Password</span>
+              <input type="password" ng-model="auth.password" required>
+            </label>
+          </div>
+
+          <button class="button button-full button-balanced" ng-click="login()" ng-disabled="loginForm.$invalid">Login</button>
+        </form>
+
+        <button class="button button-full button-positive" ng-click="signup()">Signup</button>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

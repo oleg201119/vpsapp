@@ -1,0 +1,76 @@
+<ion-view class="fob-view">
+  <div class="bar bar-header bar-stable">
+    <button class="button button-clear button-stable icon ion-ios-arrow-back" ng-click="goBack()"></button>
+    <h1 class="title">{{car.registration}}</h1>
+    <div class="icon-right stable">
+      <i class="icon ion-connection-bars"></i>
+    </div>
+  </div>
+
+  <ion-content scroll="false" class="has-header has-tabs">
+    <div class="top-content row">
+      <div class="col col-center">
+        <div class="row">
+          <div class="col col-center right">
+            <button class="button button-calm" ng-click="revertState('lock');">
+              <i class="icon ion-ios-locked"></i>
+              <div class="title">{{state.lock ? 'Unlock' : 'Lock'}}</div>
+            </button>
+          </div>
+          <div class="col col-center left">
+            <button class="button button-energized" ng-click="revertState('boot');">
+              <i class="icon ion-ios-flame"></i>
+              <div class="title">{{state.boot ? 'Release' : 'Boot'}}</div>
+            </button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col col-center right">
+            <button class="button button-balanced" ng-click="revertState('engine');">
+              <i class="icon ion-ios-recording"></i>
+              <div class="title">Engine {{state.engine ? 'Stop' : 'Start'}}</div>
+            </button>
+          </div>
+          <div class="col col-center left">
+            <button class="button button-royal" ng-click="revertState('roof');">
+              <i class="icon ion-ios-shuffle"></i>
+              <div class="title">Roof {{state.roof ? 'Close' : 'Open'}}</div>
+            </button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col col-center right">
+            <button class="button button-assertive" ng-click="panic();">
+              <i class="icon ion-alert-circled"></i>
+              <div class="title">Panic</div>
+            </button>
+          </div>
+          <div class="col col-center left">
+            <button class="button button-positive" ng-click="mode();">
+              <i class="icon ion-wrench"></i>
+              <div class="title">Mode</div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- <div class="bottom-content row">
+      <div class="col col-top right">
+        <button class="button button-energized" ng-click="revertState('engine');">
+          <i class="icon ion-ios-recording"></i>
+          <div class="title">Engine {{state.engine ? 'Stop' : 'Start'}}</div>
+        </button>
+      </div>
+      <div class="col col-top left">
+        <button class="button button-royal" ng-click="revertState('roof');">
+          <i class="icon ion-ios-shuffle"></i>
+          <div class="title">Roof {{state.roof ? 'Close' : 'Open'}}</div>
+        </button>
+      </div>
+    </div> -->
+  </ion-content>
+</ion-view>

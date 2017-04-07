@@ -1,0 +1,50 @@
+.signup-view {
+
+  .top-content {
+    height: 80%;
+  }
+
+  .bottom-content {
+    height: 20%;
+
+    button {
+      width: 100px;
+    }
+  }
+
+  .item-select {
+    .input-label {
+      width: 0%;
+      max-width: 0%;
+    }
+
+    select {
+      width: 100%;
+      max-width: 100%;
+      direction: ltr;
+    }
+  }
+
+  ion-scroll {
+    border: 1px solid #ddd;
+    padding: 5px;
+    width: 100%;
+    height: 100%;
+  }
+
+  .agree-checkbox {
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+    .icon {
+      position: absolute;
+      font-size: 22px;
+      color: $dark;
+    }
+
+    span {
+      padding-top: 5px;
+      padding-left: 25px;
+    }
+  }
+}

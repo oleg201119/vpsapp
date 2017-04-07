@@ -1,0 +1,30 @@
+<ion-modal-view class="pin-change-view">
+  <ion-header-bar>
+    <h1 class="title">Change PIN</h1>
+  </ion-header-bar>
+  <ion-content>
+    <form name="pinChangeForm" novalidate>
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">Current PIN</span>
+          <input type="text" ng-model="pin.current" required>
+        </label>
+        <label class="item item-input">
+          <span class="input-label">New PIN</span>
+          <input type="text" ng-model="pin.new" required>
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Confirm PIN</span>
+          <input type="password" ng-model="pin.confirm" required>
+        </label>
+      </div>
+    </form>
+
+    <div class="row">
+      <div class="col col-top">
+        <button class="button button-calm align-left" ng-click="closePinModal()">Cancel</button>
+        <button class="button button-calm align-right" ng-click="savePin()" ng-disabled="pinChangeForm.$invalid">Save</button>
+      </div>
+    </div>
+  </ion-content>
+</ion-modal-view>
