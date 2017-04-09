@@ -5,19 +5,20 @@
         .module('vpsapp.services')
         .factory('Profile', Profile);
 
-    Profile.$inject = ['$http', '$q', 'BASE_URL', 'API_KEY'];
+    Profile.$inject = ['$http', '$q', 'Config'];
 
-    function Profile($http, $q, BASE_URL, API_KEY) {
+    function Profile($http, $q, Config) {
 
       var service = {};
 
-      service.changePin = function(currentPin, newPin) {
+      service.changePin = function(currentPin, newPin, oid, signature) {
         var deferred = $q.defer();
-        var url = BASE_URL + 'changePIN';
+
+        var url = Config.BASE_URL + 'changePIN';
         var config = {
           headers: {
             'X-VPS-OID': oid,
-            'X-VPS-Signature': getVPSSignature(oid, token, API_KEY),
+            'X-VPS-Signature': signature,
             'Content-Type': 'application/json',
             'Accept': 'application/json'
           }
@@ -41,13 +42,14 @@
         return deferred.promise;
       }
 
-      service.changePassword = function(currentPassword, newPassword) {
+      service.changePassword = function(currentPassword, newPassword, oid, signature) {
         var deferred = $q.defer();
-        var url = BASE_URL + 'changePassword';
+
+        var url = Config.BASE_URL + 'changePassword';
         var config = {
           headers: {
             'X-VPS-OID': oid,
-            'X-VPS-Signature': getVPSSignature(oid, token, API_KEY),
+            'X-VPS-Signature': signature,
             'Content-Type': 'application/json',
             'Accept': 'application/json'
           }
@@ -57,12 +59,6 @@
           CurrentPassword: currentPassword,
           NewPassword: newPassword
         };
-
-        console.log(config);
-        console.log(data);
-        console.log(oid);
-        console.log(token);
-        console.log(API_KEY);
 
         $http.post(url, data, config)
           .success(function(response) {

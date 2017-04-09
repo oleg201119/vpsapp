@@ -5,9 +5,9 @@
         .module('vpsapp.profile')
         .controller('ProfileCtrl', ProfileCtrl);
 
-    ProfileCtrl.$inject = ['$scope', '$state', '$ionicModal', '$ionicLoading', 'Profile'];
+    ProfileCtrl.$inject = ['$rootScope', '$scope', '$state', '$ionicModal', '$ionicLoading', 'Profile', 'SecureStorage', 'Config', 'Utils', 'Error'];
 
-    function ProfileCtrl($scope, $state, $ionicModal, $ionicLoading, Profile) {
+    function ProfileCtrl($rootScope, $scope, $state, $ionicModal, $ionicLoading, Profile, SecureStorage, Config, Utils, Error) {
       $scope.password = {
         current: '',
         new: '',
@@ -43,16 +43,41 @@
 
       $scope.savePin = function() {
         $ionicLoading.show();
-        Profile.changePin($scope.pin.current, $scope.pin.new).then(
-          function(response) {
-            $ionicLoading.hide();
-            $scope.pinModal.hide();
-          },
-          function(error) {
-            $ionicLoading.hide();
-            $scope.pinModal.hide();
-          }
-        );
+
+        var oid = '';
+        var token = '';
+        var signature = '';
+
+        SecureStorage.get('oid')
+        .then(function(oidVal) {
+          oid = oidVal;
+          return SecureStorage.get('token');
+        })
+        .then(function(tokenVal) {
+          token = tokenVal;
+          signature = Utils.getVPSSignature(oid, token, Config.API_KEY);
+
+          Profile.changePin($scope.pin.current, $scope.pin.new, oid, signature).then(
+            function(response) {
+              $ionicLoading.hide();
+
+              if (response.Code != 0) {
+                var message = Error.getDescription(response.Code);
+                $rootScope.showAlert('Error', message);
+                return;
+              } else {
+                $scope.pinModal.hide();
+              }
+            },
+            function(error) {
+              $ionicLoading.hide();
+            }
+          );
+
+        })
+        .catch(function(error) {
+          $ionicLoading.hide();
+        });
       }
 
       // Password modal
@@ -66,16 +91,40 @@
 
       $scope.savePassword = function() {
         $ionicLoading.show();
-        Profile.changePassword($scope.password.current, $scope.password.new).then(
-          function(response) {
-            $ionicLoading.hide();
-            $scope.passwordModal.hide();
-          },
-          function(error) {
-            $ionicLoading.hide();
-            $scope.passwordModal.hide();
-          }
-        );        
+
+        var oid = '';
+        var token = '';
+        var signature = '';
+
+        SecureStorage.get('oid')
+        .then(function(oidVal) {
+          oid = oidVal;
+          return SecureStorage.get('token');
+        })
+        .then(function(tokenVal) {
+          token = tokenVal;
+          signature = Utils.getVPSSignature(oid, token, Config.API_KEY);
+
+          Profile.changePassword($scope.password.current, $scope.password.new, oid, signature).then(
+            function(response) {
+              $ionicLoading.hide();
+
+              if (response.Code != 0) {
+                var message = Error.getDescription(response.Code);
+                $rootScope.showAlert('Error', message);
+                return;
+              } else {
+                $scope.pinModal.hide();
+              }
+            },
+            function(error) {
+              $ionicLoading.hide();
+            }
+          );
+        })
+        .catch(function(error) {
+          $ionicLoading.hide();
+        });
       }
     }
 })();

@@ -8,6 +8,7 @@ angular.module('vpsapp', [
   'vpsapp.routes',
   'vpsapp.directives',
   'vpsapp.services',
+  'vpsapp.config',
 
   'vpsapp.base',
   'vpsapp.auth',
@@ -25,9 +26,6 @@ angular.module('vpsapp', [
 .constant('$ionicLoadingConfig', {
   template: '<ion-spinner icon="bubbles"></ion-spinner>'
 })
-.constant('API_KEY', 'c41962df-6dcb-4b40-bb81-e5672762fc5d')
-// .constant('BASE_URL', 'http://vps.oliveinnovations.com/devrest/mobile/')
-.constant('BASE_URL', 'http://localhost:8100/devrest/mobile/')
 .run(function($ionicPlatform, $rootScope, $ionicPopup) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -57,10 +55,23 @@ angular.module('vpsapp', [
 
    confirmPopup.then(function(res) {
      if(res) {
+       console.log('Confirm: ' + message);
        callback();
      } else {
+       console.log('Confirm canceled');
      }
    });
  };
+
+ $rootScope.showAlert = function(title, message) {
+   var alertPopup = $ionicPopup.alert({
+     title: title,
+     template: message
+   });
+
+   alertPopup.then(function(res) {
+     console.log('Alert: ' + message);
+   });
+ }
 
 });

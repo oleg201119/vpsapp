@@ -5,19 +5,9 @@
         .module('vpsapp.services')
         .factory('Auth', Auth);
 
-    Auth.$inject = ['$http', '$q', 'BASE_URL'];
+    Auth.$inject = ['$http', '$q', 'Config'];
 
-    function Auth($http, $q, BASE_URL) {
-
-      // var ss = new cordova.plugins.SecureStorage(
-      //   function () {
-      //     console.log('Success')
-      //   },
-      //   function (error) {
-      //     console.log('Error ' + error);
-      //   },
-      //   'vpsapp'
-      // );
+    function Auth($http, $q, Config) {
 
       var service = {};
 
@@ -72,7 +62,8 @@
 
       service.register = function() {
         var deferred = $q.defer();
-        var url = BASE_URL + 'register';
+
+        var url = Config.BASE_URL + 'register';
         var config = {
           headers: {
             'Content-Type': 'application/json',
@@ -98,38 +89,24 @@
         };
 
         console.log(data);
+
         $http.post(url, data, config)
           .success(function(response) {
             console.log(response);
-            service.oid = response.OID;
-            service.token = response.Token;
-            service.alias = response.Alias;
-
-
-            // response.Code
-
-            // ss.set(
-            //   function (key) {
-            //     console.log('Set ' + key);
-            //   },
-            //   function (error) {
-            //     console.log('Error ' + error);
-            //   },
-            //   'mykey', 'myvalue'
-            // );
-
             deferred.resolve(response);
           })
-          .error(function(err) {
-            deferred.reject(err);
-        });
+          .error(function(error) {
+            console.log(error);
+            deferred.reject(error);
+          });
 
         return deferred.promise;
       }
 
       service.login = function(email, password) {
         var deferred = $q.defer();
-        var url = BASE_URL + 'login';
+
+        var url = Config.BASE_URL + 'login';
         var urlParams = 'email=' + encodeURIComponent(email) + '&password=' + encodeURIComponent(password);
 
         url = url + '?' + urlParams;
@@ -144,39 +121,14 @@
         $http.get(url, config)
           .success(function(response) {
             console.log(response);
-
-            if (response.Code == 0) {
-              // Store session values
-              service.oid = response.OID;
-              service.token = response.Token;
-              service.alias = response.Alias;
-
-              // test
-              oid = service.oid;
-              token = service.token;
-              console.log(oid);
-              // ss.set(
-              //   function (key) {
-              //     console.log('Set ' + key);
-              //   },
-              //   function (error) {
-              //     console.log('Error ' + error);
-              //   },
-              //   'mykey', 'myvalue'
-              // );
-            }
-
             deferred.resolve(response);
           })
-          .error(function(err) {
-            deferred.reject(err);
+          .error(function(error) {
+            console.log(error);
+            deferred.reject(error);
         });
 
         return deferred.promise;
-      }
-
-      service.getAlias = function() {
-        return "TestAlias";
       }
 
       return service;

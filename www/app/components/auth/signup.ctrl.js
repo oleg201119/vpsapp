@@ -6,16 +6,14 @@
     angular.module('vpsapp.auth').controller('SignupStep3Ctrl', SignupStep3Ctrl);
     angular.module('vpsapp.auth').controller('SignupStep4Ctrl', SignupStep4Ctrl);
 
-    SignupStep1Ctrl.$inject = ['$scope', '$state', '$ionicPopup', 'Countries', 'Questions', 'Auth'];
-    SignupStep2Ctrl.$inject = ['$scope', '$state', '$ionicPopup', 'Countries', 'Questions', 'Auth'];
-    SignupStep3Ctrl.$inject = ['$scope', '$state', '$ionicPopup', 'Countries', 'Questions', 'Auth'];
-    SignupStep4Ctrl.$inject = ['$scope', '$state', 'Auth'];
+    SignupStep1Ctrl.$inject = ['$rootScope', '$scope', '$state', 'Countries', 'Auth'];
+    SignupStep2Ctrl.$inject = ['$rootScope', '$scope', '$state', 'Questions', 'Auth'];
+    SignupStep3Ctrl.$inject = ['$rootScope', '$scope', '$state', 'Auth'];
+    SignupStep4Ctrl.$inject = ['$rootScope', '$scope', '$state', '$ionicLoading', 'Auth', 'SecureStorage', 'Error'];
 
-    function SignupStep1Ctrl($scope, $state, $ionicPopup, Countries, Questions, Auth) {
+    function SignupStep1Ctrl($rootScope, $scope, $state, Countries, Auth) {
 
       $scope.countries = Countries.data;
-      $scope.questions = Questions.data;
-      $scope.questionTitle = "Random question";
 
       $scope.auth = {
         // Step-1
@@ -37,42 +35,20 @@
 
       $scope.checkValidation = function(step) {
         if (step == 'step-1' && $scope.auth.email != $scope.auth.email2) {
-          $scope.showAlert = function() {
-             var alertPopup = $ionicPopup.alert({
-               title: 'Error',
-               template: 'Please check email and confirm email'
-             });
-
-             alertPopup.then(function(res) {
-               console.log('Validation error for email');
-             });
-           };
-
-           $scope.showAlert();
-           return false;
+          $rootScope.showAlert('Error', 'Please check email and confirm email');
+          return false;
         }
 
         if (step == 'step-1' && $scope.auth.licenseNo != $scope.auth.licenseNo2) {
-          $scope.showAlert = function() {
-             var alertPopup = $ionicPopup.alert({
-               title: 'Error',
-               template: 'Please check licenseNo and confirm licenseNo'
-             });
-
-             alertPopup.then(function(res) {
-               console.log('Validation error for licenseNo');
-             });
-           };
-
-           $scope.showAlert();
-           return false;
+          $rootScope.showAlert('Error', 'Please check licenseNo and confirm licenseNo');
+          return false;
         }
 
         return true;
       }
     }
 
-    function SignupStep2Ctrl($scope, $state, $ionicPopup, Countries, Questions, Auth) {
+    function SignupStep2Ctrl($rootScope, $scope, $state, Questions, Auth) {
 
       $scope.questions = Questions.data;
       $scope.questionTitle = "Random question";
@@ -106,7 +82,7 @@
       }
     }
 
-    function SignupStep3Ctrl($scope, $state, $ionicPopup, Countries, Questions, Auth) {
+    function SignupStep3Ctrl($rootScope, $scope, $state, Auth) {
 
       $scope.auth = {
         password: '',
@@ -126,74 +102,67 @@
 
       $scope.checkValidation = function(step) {
         if (step == 'step-3' && $scope.auth.password != $scope.auth.password2) {
-          $scope.showAlert = function() {
-             var alertPopup = $ionicPopup.alert({
-               title: 'Error',
-               template: 'Please check password and confirm password'
-             });
-
-             alertPopup.then(function(res) {
-               console.log('Validation error for password');
-             });
-           };
-
-           $scope.showAlert();
-           return false;
+          $rootScope.showAlert('Error', 'Please check password and confirm password');
+          return false;
         }
 
         if (step == 'step-3' && $scope.auth.normalPin != $scope.auth.normalPin2) {
-          $scope.showAlert = function() {
-             var alertPopup = $ionicPopup.alert({
-               title: 'Error',
-               template: 'Please check Normal PIN and Confirm Normal PIN'
-             });
-
-             alertPopup.then(function(res) {
-               console.log('Validation error for normal pin');
-             });
-           };
-
-           $scope.showAlert();
-           return false;
+          $rootScope.showAlert('Error', 'Please check Normal PIN and Confirm Normal PIN');
+          return false;
         }
 
         if (step == 'step-3' && $scope.auth.blockPin != $scope.auth.blockPin2) {
-          $scope.showAlert = function() {
-             var alertPopup = $ionicPopup.alert({
-               title: 'Error',
-               template: 'Please check Block PIN and Confirm Block PIN'
-             });
-
-             alertPopup.then(function(res) {
-               console.log('Validation error for block pin');
-             });
-           };
-
-           $scope.showAlert();
-           return false;
+          $rootScope.showAlert('Error', 'Please check Block PIN and Confirm Block PIN');
+          return false;
         }
 
         return true;
       }
     }
 
-    function SignupStep4Ctrl($scope, $state, Auth) {
-      $scope.signup_step_4 = function() {
-        // TODO register
-        Auth.register().then(
-          function(response) {
-            console.log(response);
-            $state.go('app.home');
-          },
-          function(error) {
-            console.log(error);
-          }
-        );
-      }
+    function SignupStep4Ctrl($rootScope, $scope, $state, $ionicLoading, Auth, SecureStorage, Error) {
 
       $scope.checked = false;
+
       $scope.check = function() {
         $scope.checked = !$scope.checked;
+      }
+
+      $scope.signup_step_4 = function() {
+        $ionicLoading.show();
+
+        Auth.register().then(function(response) {
+
+          if (response.Code != 0) {
+            $ionicLoading.hide();
+
+            var message = Error.getDescription(response.Code);
+            $rootScope.showAlert('Error', message);
+            return;
+          }
+
+          // Store token, oid and alias to secure SecureStorage
+          SecureStorage.init()
+          .then(function() {
+            return SecureStorage.set('token', response.Token);
+          })
+          .then(function() {
+            return SecureStorage.set('oid', response.OID);
+          })
+          .then(function() {
+            return SecureStorage.set('alias', response.Alias);
+          })
+          .then(function() {
+            $ionicLoading.hide();
+            $state.go('app.home');
+          })
+          .catch(function(error) {
+            $ionicLoading.hide();
+          });
+
+        }).catch(function(error) {
+          $ionicLoading.hide();
+        });
       }
     }
 
