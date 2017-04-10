@@ -16,7 +16,7 @@
       service.init = function() {
         var deferred = $q.defer();
 
-        if (service.isInitialized && service.ss) {
+        if (service.isInitialized) {
           deferred.resolve(service.ss);
         } else {
           if (Config.ENV == 'dev') {
@@ -48,9 +48,14 @@
         var deferred = $q.defer();
 
         if (Config.ENV == 'dev') {
-          console.log('Set ' + key);
-          service.ss.push({key: key, value: val});
-          deferred.resolve(key);
+          if (!service.isInitialized) {
+            console.log('Error : Not initialized');
+            deferred.reject('Error : Not initialized');
+          } else {
+            console.log('Set ' + key);
+            service.ss.push({key: key, value: val});
+            deferred.resolve(key);
+          }
         } else {
           service.ss.set(
             function (key) {
@@ -72,13 +77,25 @@
         var deferred = $q.defer();
 
         if (Config.ENV == 'dev') {
-          for(var i=0; i<service.ss.length; i++) {
-            if (service.ss[i].key == key) {
-              var value = service.ss[i].value;
+          if (!service.isInitialized) {
+            console.log('Error : Not initialized');
+            deferred.reject('Error : Not initialized');
+          } else {
+            var found = false;
+            for(var i=0; i<service.ss.length; i++) {
+              if (service.ss[i].key == key) {
+                var value = service.ss[i].value;
+                found = true;
 
-              console.log('Success, got ' + value);
-              deferred.resolve(value);
-              break;
+                console.log('Success, got ' + value);
+                deferred.resolve(value);
+                break;
+              }
+            }
+
+            if (!found) {
+              console.log('Error : Not found');
+              deferred.reject('Error : Not found');
             }
           }
         } else {
@@ -102,13 +119,25 @@
         var deferred = $q.defer();
 
         if (Config.ENV == 'dev') {
-          for(var i=0; i<service.ss.length; i++) {
-            if (service.ss[i].key == key) {
-              service.ss.splice(i, 1);
+          if (!service.isInitialized) {
+            console.log('Error : Not initialized');
+            deferred.reject('Error : Not initialized');
+          } else {
+            var found = false;
+            for(var i=0; i<service.ss.length; i++) {
+              if (service.ss[i].key == key) {
+                service.ss.splice(i, 1);
+                found = true;
 
-              console.log('Removed ' + key);
-              deferred.resolve(key);
-              break;
+                console.log('Removed ' + key);
+                deferred.resolve(key);
+                break;
+              }
+            }
+
+            if (!found) {
+              console.log('Error : Not found');
+              deferred.reject('Error : Not found');
             }
           }
         } else {

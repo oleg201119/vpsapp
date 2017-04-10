@@ -51,8 +51,7 @@ angular.module('vpsapp.routes', [])
                         templateUrl: 'app/components/home/home.html',
                         controller: 'HomeCtrl'
                     }
-                },
-                cache: false
+                }
             })
 
             .state('app.notifications', {
@@ -136,5 +135,5 @@ angular.module('vpsapp.routes', [])
         ;
 
         // if none of the above states are matched, use this as the fallback
-        $urlRouterProvider.otherwise('/login');
+        //$urlRouterProvider.otherwise('/app/home');
     });

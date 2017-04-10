@@ -26,7 +26,7 @@ angular.module('vpsapp', [
 .constant('$ionicLoadingConfig', {
   template: '<ion-spinner icon="bubbles"></ion-spinner>'
 })
-.run(function($ionicPlatform, $rootScope, $ionicPopup) {
+.run(function($ionicPlatform, $rootScope, $ionicPopup, $state, SecureStorage) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -45,8 +45,12 @@ angular.module('vpsapp', [
 
     // init seleced vehicle
     $rootScope.car = null;
+
+    // goto home
+    $state.go('app.home');
   });
 
+  // Confirm dialog
   $rootScope.showConfirm = function(title, message, callback) {
    var confirmPopup = $ionicPopup.confirm({
      title: title,
@@ -63,6 +67,7 @@ angular.module('vpsapp', [
    });
  };
 
+ // Alert dialog
  $rootScope.showAlert = function(title, message) {
    var alertPopup = $ionicPopup.alert({
      title: title,
@@ -73,5 +78,29 @@ angular.module('vpsapp', [
      console.log('Alert: ' + message);
    });
  }
+
+ // State change
+ $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+   console.log(toState);
+
+   if ($rootScope.stateChangeBypass || toState.name === 'login' || toState.name.indexOf("signup-step") > -1) {
+     $rootScope.stateChangeBypass = false;
+     return;
+   }
+
+   event.preventDefault();
+
+   SecureStorage.init()
+    .then(function() {
+      return SecureStorage.get('token');
+    })
+    .then(function(tokenVal) {
+      $rootScope.stateChangeBypass = true;
+      $state.go(toState, toParams);
+    })
+    .catch(function(error) {
+      $state.go('login');
+    });
+ });
 
 });
