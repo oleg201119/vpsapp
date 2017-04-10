@@ -46,6 +46,25 @@ angular.module('vpsapp', [
     // init seleced vehicle
     $rootScope.car = null;
 
+    // test
+    // SecureStorage.init()
+    //  .then(function() {
+    //    return SecureStorage.remove('token');
+    //  })
+    //  .then(function() {
+    //    return SecureStorage.remove('oid');
+    //  })
+    //  .then(function() {
+    //    return SecureStorage.remove('alias');
+    //  })
+    //  .then(function() {
+    //    // goto home
+    //    $state.go('app.home');
+    //  })
+    //  .catch(function(error) {
+    //    console.log(error);
+    //  });
+
     // goto home
     $state.go('app.home');
   });

@@ -44,7 +44,7 @@
         return deferred.promise;
       }
 
-      service.set = function(key, val) {
+ service.set = function(key, val) {
         var deferred = $q.defer();
 
         if (Config.ENV == 'dev') {
@@ -66,14 +66,14 @@
               console.log('Error ' + error);
               deferred.reject(error);
             },
-            key, val
+            key, '' + val
           );
         }
 
         return deferred.promise;
       }
 
-      service.get = function(key) {
+ service.get = function(key) {
         var deferred = $q.defer();
 
         if (Config.ENV == 'dev') {
