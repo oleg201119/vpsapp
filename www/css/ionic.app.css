@@ -9821,6 +9821,9 @@ a.button {
 .align-right {
   float: right; }
 
+.align-center {
+  text-align: center; }
+
 .hiddenTab {
   display: none !important; }
 
@@ -9893,30 +9896,55 @@ a.button {
     padding-top: 5px;
     padding-left: 25px; }
 
+.modal.pin-input-view {
+  background-color: rgba(0, 0, 0, 0.2); }
+  .modal.pin-input-view .modal-body {
+    margin-top: 180px;
+    padding-left: 1px;
+    padding-right: 1px;
+    box-shadow: 0px 1px 3px 2px rgba(0, 0, 0, 0.3);
+    background-color: white; }
+    .modal.pin-input-view .modal-body .header {
+      color: #444;
+      text-align: center; }
+      .modal.pin-input-view .modal-body .header h2 {
+        font-size: 17px;
+        font-weight: 500;
+        line-height: 44px;
+        margin-bottom: 0px; }
+  .modal.pin-input-view .list {
+    margin-bottom: 20px; }
+  .modal.pin-input-view button {
+    width: 100px; }
+
 .profile-view .top-content {
   width: 100%;
   height: 100%; }
-  .profile-view .top-content .col {
-    padding: 20px; }
-  .profile-view .top-content .left {
-    text-align: left; }
-  .profile-view .top-content .right {
-    text-align: right; }
-  .profile-view .top-content .button {
-    width: 120px;
-    height: 120px; }
-    .profile-view .top-content .button div.title {
-      margin-top: 0px;
-      line-height: 100%;
-      height: 40px; }
 
-.modal.password-change-view, .modal.pin-change-view {
+.profile-view .col {
+  padding: 20px; }
+
+.profile-view .left {
+  text-align: left; }
+
+.profile-view .right {
+  text-align: right; }
+
+.profile-view .button {
+  width: 120px;
+  height: 120px; }
+  .profile-view .button div.title {
+    margin-top: 0px;
+    line-height: 100%;
+    height: 40px; }
+
+.modal.password-change-view, .modal.pin-change-view, .modal.otpcode-view {
   min-height: 300px;
   top: 200px;
   padding-top: 1px;
   padding-bottom: 1px;
   box-shadow: 0px 1px 3px 2px rgba(0, 0, 0, 0.3); }
-  .modal.password-change-view button, .modal.pin-change-view button {
+  .modal.password-change-view button, .modal.pin-change-view button, .modal.otpcode-view button {
     width: 100px; }
 
 .fob-view .top-content {
@@ -9939,11 +9967,17 @@ a.button {
       line-height: 100%;
       height: 40px; }
 
-.modal.owner-change-view, .modal.driver-add-view {
-  min-height: 300px;
-  top: 200px;
+.modal.owner-change-view, .modal.access-add-view {
   padding-top: 1px;
   padding-bottom: 1px;
   box-shadow: 0px 1px 3px 2px rgba(0, 0, 0, 0.3); }
-  .modal.owner-change-view button, .modal.driver-add-view button {
+  .modal.owner-change-view button, .modal.access-add-view button {
     width: 100px; }
+
+.modal.owner-change-view {
+  min-height: 260px;
+  top: 200px; }
+
+.modal.access-add-view {
+  min-height: 360px;
+  top: 230px; }

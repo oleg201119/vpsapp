@@ -17,11 +17,12 @@ angular.module('vpsapp', [
   'vpsapp.profile',
   'vpsapp.fob',
   'vpsapp.service',
-  'vpsapp.drivers',
+  'vpsapp.access',
   'vpsapp.panic',
   'vpsapp.mode',
 
-  'underscore'
+  'base64',
+  'underscore',
 ])
 .constant('$ionicLoadingConfig', {
   template: '<ion-spinner icon="bubbles"></ion-spinner>'
@@ -100,7 +101,6 @@ angular.module('vpsapp', [
 
  // State change
  $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-   console.log(toState);
 
    if ($rootScope.stateChangeBypass || toState.name === 'login' || toState.name.indexOf("signup-step") > -1) {
      $rootScope.stateChangeBypass = false;

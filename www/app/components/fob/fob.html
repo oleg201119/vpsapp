@@ -1,7 +1,7 @@
 <ion-view class="fob-view">
   <div class="bar bar-header bar-stable">
     <button class="button button-clear button-stable icon ion-ios-arrow-back" ng-click="goBack()"></button>
-    <h1 class="title">{{car.registration}}</h1>
+    <h1 class="title">Fob {{device.Identity2}}</h1>
     <div class="icon-right stable">
       <i class="icon ion-connection-bars"></i>
     </div>
@@ -18,22 +18,22 @@
             </button>
           </div>
           <div class="col col-center left">
-            <button class="button button-energized" ng-click="revertState('boot');">
+            <button class="button button-energized" ng-click="revertState('boot')" ng-if="shButton(1)">
               <i class="icon ion-ios-flame"></i>
               <div class="title">{{state.boot ? 'Release' : 'Boot'}}</div>
             </button>
           </div>
         </div>
 
-        <div class="row">
+        <div class="row" ng-if="!(!shButton(0) && !shButton(2))">
           <div class="col col-center right">
-            <button class="button button-balanced" ng-click="revertState('engine');">
+            <button class="button button-balanced" ng-click="revertState('engine')" ng-if="shButton(0)">
               <i class="icon ion-ios-recording"></i>
               <div class="title">Engine {{state.engine ? 'Stop' : 'Start'}}</div>
             </button>
           </div>
           <div class="col col-center left">
-            <button class="button button-royal" ng-click="revertState('roof');">
+            <button class="button button-royal" ng-click="revertState('roof')" ng-if="shButton(2)">
               <i class="icon ion-ios-shuffle"></i>
               <div class="title">Roof {{state.roof ? 'Close' : 'Open'}}</div>
             </button>
@@ -42,13 +42,13 @@
 
         <div class="row">
           <div class="col col-center right">
-            <button class="button button-assertive" ng-click="panic();">
+            <button class="button button-assertive" ng-click="panic()">
               <i class="icon ion-alert-circled"></i>
               <div class="title">Panic</div>
             </button>
           </div>
           <div class="col col-center left">
-            <button class="button button-positive" ng-click="mode();">
+            <button class="button button-positive" ng-click="mode()">
               <i class="icon ion-wrench"></i>
               <div class="title">Mode</div>
             </button>

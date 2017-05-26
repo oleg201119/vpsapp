@@ -2,30 +2,30 @@
   <ion-header-bar>
     <h1 class="title">Change Owner</h1>
     <div class="buttons">
-      <button class="button button-clear button-icon button-stable ion-ios-close-empty" ng-click="closeOwner()"></button>
+      <button class="button button-clear button-icon button-stable ion-ios-close-empty" ng-click="closeOwnerModal()"></button>
     </div>
   </ion-header-bar>
-  <ion-content>
+  <ion-content scroll="false">
     <form name="ownerChangeForm" novalidate>
       <div class="list">
         <label class="item item-input">
           <span class="input-label">New Owner ID</span>
-          <input type="text" ng-model="owner.id" required>
+          <input type="text" ng-model="access_model.owner_id" required>
         </label>
         <label class="item item-input">
-          <span class="input-label">New Owner Verification Key</span>
-          <input type="text" ng-model="owner.key" required>
+          <span class="input-label">New Owner OTP Code</span>
+          <input type="text" ng-model="access_model.otp" required>
         </label>
         <label class="item item-input">
-          <span class="input-label">Your Password</span>
-          <input type="password" ng-model="owner.password" required>
+          <span class="input-label">Your PIN</span>
+          <input type="password" ng-model="access_model.pin" required>
         </label>
       </div>
     </form>
 
     <div class="row">
       <div class="col col-top">
-        <button class="button button-calm align-left" ng-click="closeOwner()">Cancel</button>
+        <button class="button button-calm align-left" ng-click="closeOwnerModal()">Cancel</button>
         <button class="button button-calm align-right" ng-click="transfer()" ng-disabled="ownerChangeForm.$invalid">Transfer</button>
       </div>
     </div>

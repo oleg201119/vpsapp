@@ -73,6 +73,34 @@
         return deferred.promise;
       }
 
+      service.getCode = function(oid, signature) {
+        var deferred = $q.defer();
+
+        var url = Config.BASE_URL + 'requestOtpCode';
+        var config = {
+          headers: {
+            'X-VPS-OID': oid,
+            'X-VPS-Signature': signature,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          }
+        };
+
+        $http.get(url, config)
+          .success(function(response) {
+            response.oid = oid;
+            
+            console.log(response);
+            deferred.resolve(response);
+          })
+          .error(function(err) {
+            console.log(err);
+            deferred.reject(err);
+        });
+
+        return deferred.promise;
+      }
+
       return service;
     }
 })();

@@ -1,0 +1,24 @@
+<ion-modal-view class="pin-input-view">
+  <ion-content scroll="false">
+    <div class="modal-body">
+      <div class="bar-calm header">
+        <h2>Enter PIN</h2>
+      </div>
+      <form name="pinEnterForm" novalidate>
+        <div class="list">
+          <label class="item item-input">
+            <span class="input-label">Current PIN</span>
+            <input type="text" ng-model="pin.current" required>
+          </label>
+        </div>
+      </form>
+
+      <div class="row">
+        <div class="col col-top">
+          <button class="button button-calm align-left" ng-click="closePinModal()">Cancel</button>
+          <button class="button button-calm align-right" ng-click="enterPin()" ng-disabled="pinEnterForm.$invalid">Ok</button>
+        </div>
+      </div>
+  </div>
+  </ion-content>
+</ion-modal-view>

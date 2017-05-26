@@ -27,7 +27,7 @@
             return;
           }
 
-          // Store token, oid and alias to secure SecureStorage
+          // Store token, oid and alias to secure SecureStorage          
           SecureStorage.init()
           .then(function() {
             return SecureStorage.set('token', response.Token);

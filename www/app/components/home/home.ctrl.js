@@ -5,33 +5,138 @@
         .module('vpsapp.home')
         .controller('HomeCtrl', HomeCtrl);
 
-    HomeCtrl.$inject = ['$rootScope', '$scope', '$state', 'Auth', 'Cars', 'SecureStorage'];
+    HomeCtrl.$inject = ['$rootScope', '$scope', '$state', '$ionicLoading', '$ionicModal', '$ionicPopup', 'Auth', 'Device', 'Config', 'Utils', 'SecureStorage'];
 
-    function HomeCtrl($rootScope, $scope, $state, Auth, Cars, SecureStorage) {
+    function HomeCtrl($rootScope, $scope, $state, $ionicLoading, $ionicModal, $ionicPopup, Auth, Device, Config, Utils, SecureStorage) {
+
+      $scope.alias = '';
+      $scope.devices = [];
+
+      $scope.pin = {
+        current: ''
+      };
+
+      $scope.pinModal = null;
+
+      // PIN modal
+      $ionicModal.fromTemplateUrl('app/components/home/pin-input.html', {
+        scope: $scope
+      }).then(function(modal) {
+        $scope.pinModal = modal;
+      });
+
+      $scope.showPinModal = function() {
+        $scope.pinModal.show();
+      }
+
+      $scope.closePinModal = function() {
+        $scope.pinModal.hide();
+      }
+
+      $scope.enterPin = function() {
+        var json_obj = null;
+
+        SecureStorage.get('token').then(function(tokenVal) {
+
+          console.log('Token: ' + tokenVal);
+          console.log('PIN: ' + $scope.pin.current);
+
+          // Cert1
+          json_obj = Utils.decryptCert($scope.device.Cert1, tokenVal, $scope.pin.current);
+
+          if (json_obj === false) {
+            console.log('Decryption faild for Cert1');
+
+            // Cert2
+            json_obj = Utils.decryptCert($scope.device.Cert2, tokenVal, $scope.pin.current);
+
+            if (json_obj === false) {
+              console.log('Decryption faild for Cert2');
+
+              // Error pin
+              var alertPopup = $ionicPopup.alert({
+                title: 'Incorrect PIN!',
+                template: 'Enter another PIN'
+              });
+
+              alertPopup.then(function(res) {
+                $scope.pin.current = '';
+              });
+
+              return;
+            }
+          }
+
+          // Got json
+          $scope.closePinModal();
+
+          console.log(json_obj);
+
+          var current_date = new Date();
+          var year = current_date.getFullYear();
+          var month = current_date.getMonth() + 1;
+          var day = current_date.getDate();
+
+          var date_str = year + '-' +  (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
+          console.log(date_str);
+
+          var key_for_date = json_obj[date_str];
+          console.log(key_for_date);
+
+          $rootScope.key = key_for_date;
+          $rootScope.device = $scope.device;
+          $state.go('tab.fob');
+
+        }).catch(function(error) {
+
+        });
+      }
+
       // Get alias
       SecureStorage.get('alias').then(
         function(alias) {
           $scope.alias = alias;
         },
         function(error) {
-          //
         }
       );
 
-      // Get cars
-      $scope.cars = Cars.getCars();
-
-      $scope.carSelect = function(carId) {
-        $rootScope.car = Cars.getCar(carId);
-        $state.go('tab.fob');
+      $scope.selectDevice = function(index) {
+        $scope.device = $scope.devices[index];
+        $scope.showPinModal();
       }
 
       $scope.notifications = function() {
         $state.go('app.notifications');
       }
 
-      $scope.refresh = function() {
+      $scope.getDevices = function() {
+        $ionicLoading.show();
 
+        Device.getDevices().then(
+          function(response) {
+            $ionicLoading.hide();
+            $scope.devices = response.Devices;
+
+            // TODO store devices into secure storage
+            var strForDevices = JSON.stringify($scope.devices);
+
+          },
+          function(error) {
+            $ionicLoading.hide();
+          }
+        );
       }
+
+      $scope.getDeviceImage = function(device) {
+        return Device.getDeviceIamge(device.MakeId);
+      }
+
+      $scope.refresh = function() {
+        $scope.getDevices();
+      }
+
+      // Init
+      $scope.getDevices();
     }
 })();

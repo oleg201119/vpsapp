@@ -24,11 +24,11 @@
       "www/**/*.js",
       "www/**/*.css"
     ]
-  },  
+  },
   "proxies": [
-  	{
-  		"path": "/devrest/mobile/",
-  		"proxyUrl": "http://vps.oliveinnovations.com/devrest/mobile/"
-  	}
+    {
+      "path": "/devrest/mobile/",
+      "proxyUrl": "http://vps.oliveinnovations.com/devrest/mobile/"
+    }
   ]
 }

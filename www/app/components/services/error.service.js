@@ -35,6 +35,26 @@
         {
           code: 6,
           description: 'Owner password could not be changed as current password is invalid'
+        },
+        {
+          code: 7,
+          description: 'Unknown device or device in an invalid state'
+        },
+        {
+          code: 8,
+          description: 'Owner does not have access to device or is unable to grant access to the device'
+        },
+        {
+          code: 9,
+          description: 'Owner can not manage access to device'
+        },
+        {
+          code: 10,
+          description: 'New owner already has access to device'
+        },
+        {
+          code: 11,
+          description: 'Owner OTP code is invalid or has expired'
         }
       ];
 

@@ -1,0 +1,45 @@
+<ion-modal-view class="access-add-view">
+  <ion-header-bar>
+    <h1 class="title">Add Access</h1>
+    <div class="buttons">
+      <button class="button button-clear button-icon button-stable ion-ios-close-empty" ng-click="closeAddModal()"></button>
+    </div>
+  </ion-header-bar>
+  <ion-content scroll="false">
+    <form name="accessAddForm" novalidate>
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">Owner ID</span>
+          <input type="text" ng-model="access_model.owner_id" required>
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Expires</span>
+          <input type="date" ng-model="access_model.expires" required>
+        </label>
+
+        <div class="item item-icon-left">
+          <i class="icon" ng-class="access_model.grant ? 'ion-android-checkbox-outline' : 'ion-android-checkbox-outline-blank'" ng-click="access_model.grant = !access_model.grant"></i>
+          Owner can grant access
+        </div>
+
+        <label class="item item-input">
+          <span class="input-label">Owner OTP Code</span>
+          <input type="text" ng-model="access_model.otp" required>
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">Your PIN</span>
+          <input type="password" ng-model="access_model.pin" required>
+        </label>
+
+      </div>
+    </form>
+
+    <div class="row">
+      <div class="col col-top">
+        <button class="button button-calm align-left" ng-click="closeAddModal()">Cancel</button>
+        <button class="button button-calm align-right" ng-click="save()" ng-disabled="accessAddForm.$invalid">Grant</button>
+      </div>
+    </div>
+  </ion-content>
+</ion-modal-view>

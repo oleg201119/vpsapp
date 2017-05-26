@@ -14,20 +14,10 @@
         {{alias}}
       </div>
 
-      <a class="item item-thumbnail-left" ng-click="carSelect(car.id)" ng-repeat="car in cars | filter: { isMine: true }">
-        <img ng-src="{{car.image}}">
-        <h2>{{car.registration}}</h2>
-        <p></p>
-      </a>
-
-      <div class="item item-divider">
-        Other Vehicles
-      </div>
-
-      <a class="item item-thumbnail-left" ng-click="carSelect(car.id)" ng-repeat="car in cars | filter:  { isMine: false }">
-        <img ng-src="{{car.image}}">
-        <h2>{{car.registration}}</h2>
-        <p></p>
+      <a class="item item-thumbnail-left" ng-click="selectDevice($index)" ng-repeat="device in devices track by $index">
+        <img ng-src="{{getDeviceImage(device)}}">
+        <h2>{{device.MakeID}}</h2>
+        <p>{{device.Identity2}}</p>
       </a>
     </div>
   </ion-content>

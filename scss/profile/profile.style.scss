@@ -2,35 +2,35 @@
   .top-content {
     width: 100%;
     height: 100%;
+  }
 
-    .col {
-      padding: 20px;
-    }
+  .col {
+    padding: 20px;
+  }
 
-    .left {
-      text-align: left;
-    }
+  .left {
+    text-align: left;
+  }
 
-    .right {
-      text-align: right;
-    }
+  .right {
+    text-align: right;
+  }
 
-    .button {
-      width: 120px;
-      height: 120px;
+  .button {
+    width: 120px;
+    height: 120px;
 
-      div.title {
-        margin-top: 0px;
-        line-height: 100%;
-        height: 40px;
-      }
+    div.title {
+      margin-top: 0px;
+      line-height: 100%;
+      height: 40px;
     }
   }
 }
 
 .modal {
 
-  &.password-change-view, &.pin-change-view {
+  &.password-change-view, &.pin-change-view, &.otpcode-view {
     min-height: 300px;
     top: 200px;
 

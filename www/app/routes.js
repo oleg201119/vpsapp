@@ -102,12 +102,12 @@ angular.module('vpsapp.routes', [])
                 }
             })
 
-            .state('tab.drivers', {
-                url: '/drivers',
+            .state('tab.access', {
+                url: '/access',
                 views: {
-                    'tab-drivers': {
-                        templateUrl: 'app/components/drivers/drivers.html',
-                        controller: 'DriversCtrl'
+                    'tab-access': {
+                        templateUrl: 'app/components/access/access.html',
+                        controller: 'AccessCtrl'
                     }
                 }
             })

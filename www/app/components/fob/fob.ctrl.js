@@ -5,12 +5,12 @@
         .module('vpsapp.fob')
         .controller('FobCtrl', FobCtrl);
 
-    FobCtrl.$inject = ['$rootScope', '$scope', '$state', 'Cars'];
+    FobCtrl.$inject = ['$rootScope', '$scope', '$state', '$ionicModal', '$ionicPopup', 'Utils', 'SecureStorage'];
 
-    function FobCtrl($rootScope, $scope, $state, Cars) {
+    function FobCtrl($rootScope, $scope, $state, $ionicModal, $ionicPopup, Utils, SecureStorage) {
 
       $rootScope.isHome = false;
-      $scope.car = $rootScope.car;
+      $scope.device = $rootScope.device;
 
       $scope.state = {
         lock: true,
@@ -18,6 +18,21 @@
         engine: false,
         roof: false
       };
+
+      // Initialize
+      $scope.init = function() {
+
+      }
+
+      // Show / Hide buttons
+      $scope.shButton = function(optionNumber) {
+        for(var i=0; i<$scope.device.Options.length; i++) {
+          if ($scope.device.Options[i] === optionNumber)
+            return true;
+        }
+
+        return false;
+      }
 
       $scope.revertState = function(property) {
         if (property == 'lock') {
@@ -42,11 +57,14 @@
       }
 
       $scope.mode = function () {
-        
+
       }
 
       $scope.goBack = function() {
         $state.go('app.home');
       }
+
+      // Init
+      $scope.init();
     }
 })();
