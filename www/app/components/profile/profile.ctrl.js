@@ -93,6 +93,10 @@
 
       // Password modal
       $scope.changePassword = function() {
+        $scope.password.current = '';
+        $scope.password.new = '';
+        $scope.password.confirm = '';
+
         $scope.passwordModal.show();
       }
 
@@ -125,7 +129,7 @@
                 $rootScope.showAlert('Error', message);
                 return;
               } else {
-                $scope.pinModal.hide();
+                $scope.closePasswordModal();
               }
             },
             function(error) {
@@ -172,7 +176,7 @@
                 $rootScope.showAlert('Error', message);
                 return;
               } else {
-                $scope.code.oid = response.oid;
+                $scope.code.oid = oid;
                 $scope.code.otp = response.OTPCode;
                 $scope.showOtpModal();
               }

@@ -1,7 +1,7 @@
 <ion-view class="drivers-view">
   <div class="bar bar-header bar-stable">
     <button class="button button-clear button-stable icon ion-ios-arrow-back" ng-click="goBack()"></button>
-    <h1 class="title">{{car.registration}}</h1>
+    <h1 class="title">Fob {{device.Identity2}}</h1>
     <div class="icon-right stable">
       <i class="icon ion-connection-bars"></i>
     </div>
@@ -21,7 +21,7 @@
         Access
         <i class="icon ion-ios-plus-outline" ng-click="openAddModal()" style="padding-top: 20px;" ng-if="user_access.CanGrant"></i>
       </div>
-      <div class="item item-icon-right" ng-repeat="access in device.Access">
+      <div class="item item-icon-right" ng-repeat="access in device.Access | filter: filterOwner">
         <h2>{{access.Alias}}</h2>
         <p>Expires: {{access.Expires | date : "yyyy-MM-dd"}}</p>
         <i class="icon ion-ios-minus-outline" ng-click="removeAccess(access)" ng-if="user_access.CanGrant"></i>

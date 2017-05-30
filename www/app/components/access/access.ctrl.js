@@ -42,6 +42,15 @@
         });
       }
 
+      $scope.filterOwner = function(access) {
+        if (access.IsOwner) {
+          return false;
+        }
+        else {
+          return true;
+        }
+      }
+      
       $scope.getAccessForOwner = function() {
         var i = 0;
 

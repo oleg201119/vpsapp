@@ -88,8 +88,6 @@
 
         $http.get(url, config)
           .success(function(response) {
-            response.oid = oid;
-            
             console.log(response);
             deferred.resolve(response);
           })

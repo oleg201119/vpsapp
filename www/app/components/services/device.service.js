@@ -109,8 +109,8 @@
           .then(function(response) {
               console.log(response.data);
               deferred.resolve(response);
-          }, function(error) {
-              console.log(error);
+          }, function(err) {
+              console.log(err);
               deferred.reject(err);
           });
         })
