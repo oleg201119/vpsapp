@@ -77,11 +77,12 @@
                 $rootScope.showAlert('Error', message);
                 return;
               } else {
-                $scope.pinModal.hide();
+                $scope.closePinModal();
               }
             },
             function(error) {
               $ionicLoading.hide();
+              $rootScope.showAlert('Error', 'The request failed. Please check network connection.');
             }
           );
 
@@ -134,6 +135,7 @@
             },
             function(error) {
               $ionicLoading.hide();
+              $rootScope.showAlert('Error', 'The request failed. Please check network connection.');
             }
           );
         })
@@ -183,6 +185,7 @@
             },
             function(error) {
               $ionicLoading.hide();
+              $rootScope.showAlert('Error', 'The request failed. Please check network connection.');
             }
           );
         })

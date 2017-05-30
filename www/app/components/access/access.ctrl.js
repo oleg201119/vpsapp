@@ -50,7 +50,7 @@
           return true;
         }
       }
-      
+
       $scope.getAccessForOwner = function() {
         var i = 0;
 
@@ -134,11 +134,13 @@
               },
               function(error) {
                 $ionicLoading.hide();
+                $rootScope.showAlert('Error', 'The request failed. Please check network connection.');
               }
             );
           },
           function(error) {
             $ionicLoading.hide();
+            $rootScope.showAlert('Error', 'The request failed. Please check network connection.');
           }
         );
       }
@@ -178,11 +180,13 @@
               },
               function(error) {
                 $ionicLoading.hide();
+                $rootScope.showAlert('Error', 'The request failed. Please check network connection.');
               }
             );
           },
           function(error) {
             $ionicLoading.hide();
+            $rootScope.showAlert('Error', 'The request failed. Please check network connection.');
           }
         );
       }
@@ -214,11 +218,13 @@
                 },
                 function(error) {
                   $ionicLoading.hide();
+                  $rootScope.showAlert('Error', 'The request failed. Please check network connection.');
                 }
               );
             },
             function(error) {
               $ionicLoading.hide();
+              $rootScope.showAlert('Error', 'The request failed. Please check network connection.');
             }
           );
 
