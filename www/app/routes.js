@@ -51,7 +51,8 @@ angular.module('vpsapp.routes', [])
                         templateUrl: 'app/components/home/home.html',
                         controller: 'HomeCtrl'
                     }
-                }
+                },
+                cache: false
             })
 
             .state('app.notifications', {

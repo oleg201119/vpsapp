@@ -5,12 +5,14 @@
         .module('vpsapp.base')
         .controller('MenuCtrl', MenuCtrl);
 
-    MenuCtrl.$inject = ['$rootScope', '$scope', '$state', 'SecureStorage'];
+    MenuCtrl.$inject = ['$rootScope', '$scope', '$state', '$ionicHistory', 'SecureStorage'];
 
-    function MenuCtrl($rootScope, $scope, $state, SecureStorage) {
+    function MenuCtrl($rootScope, $scope, $state, $ionicHistory, SecureStorage) {
       console.log("MenuCtrl");
 
       $scope.logout = function() {
+        $ionicHistory.clearHistory();
+
         SecureStorage.init()
          .then(function() {
            return SecureStorage.remove('token');

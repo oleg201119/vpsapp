@@ -89,14 +89,18 @@
         });
       }
 
-      // Get alias
-      SecureStorage.get('alias').then(
-        function(alias) {
-          $scope.alias = alias;
-        },
-        function(error) {
-        }
-      );
+      $scope.init = function() {
+        // Get alias
+        SecureStorage.get('alias').then(
+          function(alias) {
+            $scope.alias = alias;
+            $rootScope.devices = [];
+            $scope.getDevices();
+          },
+          function(error) {
+          }
+        );
+      }
 
       $scope.selectDevice = function(index) {
         $rootScope.device = $rootScope.devices[index];
@@ -130,6 +134,6 @@
       }
 
       // Init
-      $scope.getDevices();
+      $scope.init();
     }
 })();
