@@ -41,7 +41,20 @@
           $http.get(url, config)
             .success(function(response) {
               console.log(response);
-              deferred.resolve(response);
+
+              // Store devices into secure storage
+              var strForDevices = JSON.stringify(response.Devices);
+
+              SecureStorage.init()
+              .then(function() {
+                return SecureStorage.set('devices', strForDevices);
+              })
+              .then(function() {
+                deferred.resolve(response);
+              })
+              .catch(function(error) {
+                deferred.resolve(response);
+              });
             })
             .error(function(err) {
               console.log(err);
@@ -75,26 +88,29 @@
           signature = Utils.getVPSSignature(oid, token, Config.API_KEY);
 
           var url = Config.BASE_URL + 'removeDeviceAccess';
-          var config = {
-            headers: {
-              'X-VPS-OID': oid,
-              'X-VPS-Signature': signature,
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            },
-            params: {
-              DeviceID: device_id,
-              OwnerID: owner_id
-            }
+          var headers = {
+            'X-VPS-OID': oid,
+            'X-VPS-Signature': signature,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
           };
 
-          $http.delete(url, config)
-            .success(function(response) {
-              console.log(response);
+          var data = {
+            DeviceID: device_id,
+            OwnerID: owner_id
+          };
+
+          $http({
+              url: url,
+              method: 'DELETE',
+              data: data,
+              headers: headers
+          })
+          .then(function(response) {
+              console.log(response.data);
               deferred.resolve(response);
-            })
-            .error(function(err) {
-              console.log(err);
+          }, function(error) {
+              console.log(error);
               deferred.reject(err);
           });
         })

@@ -28,7 +28,7 @@
 
       $scope.signup_step_1 = function() {
         if ($scope.checkValidation('step-1')) {
-          Auth.setStep1($scope.auth.email, $scope.auth.birth, $scope.auth.alias, $scope.auth.licenseNo, $scope.auth.country);
+          Auth.setStep1($scope.auth.email, $scope.auth.birth, $scope.auth.alias, $scope.auth.licenseNo, $scope.auth.country.name);
           $state.go('signup-step-2');
         }
       }

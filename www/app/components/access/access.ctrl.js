@@ -10,7 +10,6 @@
     function AccessCtrl($rootScope, $scope, $state, $ionicModal, $ionicLoading, SecureStorage, Device) {
 
       $rootScope.isHome = false;
-      $scope.device = $rootScope.device;
       $scope.owner_access = null;
       $scope.user_access = null;
       $scope.oid = 0;
@@ -46,8 +45,8 @@
       $scope.getAccessForOwner = function() {
         var i = 0;
 
-        for(i=0; i<$scope.device.Access.length; i++) {
-          var access = $scope.device.Access[i];
+        for(i=0; i<$rootScope.device.Access.length; i++) {
+          var access = $rootScope.device.Access[i];
 
           if (access.IsOwner) {
             return access;
@@ -60,8 +59,8 @@
       $scope.getAccessForUser = function() {
         var i = 0;
 
-        for(i=0; i<$scope.device.Access.length; i++) {
-          var access = $scope.device.Access[i];
+        for(i=0; i<$rootScope.device.Access.length; i++) {
+          var access = $rootScope.device.Access[i];
 
           if (access.OID == $scope.oid) {
             return access;
@@ -104,9 +103,30 @@
 
         Device.changeDeviceOwner($scope.device.DID, $scope.access_model.owner_id, $scope.access_model.pin, $scope.access_model.otp).then(
           function(response) {
-            $ionicLoading.hide();
 
-            // TODO refresh list
+            // Get devices
+            Device.getDevices().then(
+              function(response) {
+                // Update device list
+                $rootScope.devices = response.Devices;
+
+                // Update selected device
+                var i = 0;
+                for(i=0; i<$rootScope.devices.length; i++) {
+                  if ($rootScope.device.DID == $rootScope.devices[i].DID) {
+                    $rootScope.device = $rootScope.devices[i];
+                  }
+                }
+
+                $ionicLoading.hide();
+
+                // Go to home
+                $state.go('app.home');
+              },
+              function(error) {
+                $ionicLoading.hide();
+              }
+            );
           },
           function(error) {
             $ionicLoading.hide();
@@ -129,11 +149,28 @@
 
         $ionicLoading.show();
 
-        Device.grantDeviceAccess($scope.device.DID, $scope.access_model.owner_id, $scope.access_model.expires, $scope.access_model.pin, $scope.access_model.otp, $scope.access_model.grant).then(        
+        Device.grantDeviceAccess($scope.device.DID, $scope.access_model.owner_id, $scope.access_model.expires, $scope.access_model.pin, $scope.access_model.otp, $scope.access_model.grant).then(
           function(response) {
-            $ionicLoading.hide();
+            // Get devices
+            Device.getDevices().then(
+              function(response) {
+                // Update device list
+                $rootScope.devices = response.Devices;
 
-            // TODO refresh list
+                // Update selected device
+                var i = 0;
+                for(i=0; i<$rootScope.devices.length; i++) {
+                  if ($rootScope.device.DID == $rootScope.devices[i].DID) {
+                    $rootScope.device = $rootScope.devices[i];
+                  }
+                }
+
+                $ionicLoading.hide();
+              },
+              function(error) {
+                $ionicLoading.hide();
+              }
+            );
           },
           function(error) {
             $ionicLoading.hide();
@@ -147,10 +184,29 @@
 
           $ionicLoading.show();
 
-          Device.removeDeviceAccess($scope.device.DID, access.OID).then(
+          Device.removeDeviceAccess($rootScope.device.DID, access.OID).then(
             function(response) {
-              $ionicLoading.hide();
-              //$scope.devices = response.Devices;
+
+              // Get devices
+              Device.getDevices().then(
+                function(response) {
+                  // Update device list
+                  $rootScope.devices = response.Devices;
+
+                  // Update selected device
+                  var i = 0;
+                  for(i=0; i<$rootScope.devices.length; i++) {
+                    if ($rootScope.device.DID == $rootScope.devices[i].DID) {
+                      $rootScope.device = $rootScope.devices[i];
+                    }
+                  }
+
+                  $ionicLoading.hide();
+                },
+                function(error) {
+                  $ionicLoading.hide();
+                }
+              );
             },
             function(error) {
               $ionicLoading.hide();

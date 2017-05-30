@@ -9954,7 +9954,7 @@ a.button {
 .fob-view .row {
   width: 100%; }
   .fob-view .row .col {
-    padding: 20px; }
+    padding: 10px; }
   .fob-view .row .left {
     text-align: left; }
   .fob-view .row .right {
@@ -9980,4 +9980,4 @@ a.button {
 
 .modal.access-add-view {
   min-height: 360px;
-  top: 230px; }
+  top: 200px; }

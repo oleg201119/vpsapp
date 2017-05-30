@@ -10,8 +10,6 @@
     function HomeCtrl($rootScope, $scope, $state, $ionicLoading, $ionicModal, $ionicPopup, Auth, Device, Config, Utils, SecureStorage) {
 
       $scope.alias = '';
-      $scope.devices = [];
-
       $scope.pin = {
         current: ''
       };
@@ -84,7 +82,6 @@
           console.log(key_for_date);
 
           $rootScope.key = key_for_date;
-          $rootScope.device = $scope.device;
           $state.go('tab.fob');
 
         }).catch(function(error) {
@@ -102,7 +99,7 @@
       );
 
       $scope.selectDevice = function(index) {
-        $scope.device = $scope.devices[index];
+        $rootScope.device = $rootScope.devices[index];
         $scope.showPinModal();
       }
 
@@ -116,11 +113,7 @@
         Device.getDevices().then(
           function(response) {
             $ionicLoading.hide();
-            $scope.devices = response.Devices;
-
-            // TODO store devices into secure storage
-            var strForDevices = JSON.stringify($scope.devices);
-
+            $rootScope.devices = response.Devices;
           },
           function(error) {
             $ionicLoading.hide();
